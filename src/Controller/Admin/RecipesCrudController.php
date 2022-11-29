@@ -37,7 +37,7 @@ class RecipesCrudController extends AbstractCrudController
                 ->setUploadDir('public/images/')
                 ->setUploadedFileNamePattern('[randomhash].[extension]')
                 ->setRequired(false),
-            CollectionField::new('User', 'Allergen', 'Diet')
+            CollectionField::new( 'allergens', 'diets')
             
         ];
     }

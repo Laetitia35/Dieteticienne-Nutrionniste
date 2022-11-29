@@ -46,8 +46,9 @@ class RegisterAdminController extends AbstractController
 
     #[Route('/inscription', name: 'app_register_admin')]
     public function index(Request $request, UserPasswordHasherInterface $passwordHasher, PasswordGenerator $passwordGenerator): Response
+    
     {
-        $generator = print_r($passwordGenerator->generateRandomStrongPassword(10));
+        $generator = $passwordGenerator->generateRandomStrongPassword(10);
 
         $user = new User();
         $form = $this->createForm(RegisterAdminType::class, $user);
@@ -66,7 +67,6 @@ class RegisterAdminController extends AbstractController
             $this->entityManager->flush();
             
         }
-
 
         return $this->render('register_admin/index.html.twig', [
             'form' => $form->createView(),

@@ -43,21 +43,22 @@ class Recipes
     #[ORM\Column(length: 255)]
     private ?string $illustration = null;
 
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'recipes')]
-    private Collection $user;
+    #[ORM\ManyToMany(targetEntity: Diet::class, inversedBy: 'recipes')]
+    private Collection $diets;
 
     #[ORM\ManyToMany(targetEntity: Allergen::class, inversedBy: 'recipes')]
-    private Collection $allergen;
+    private Collection $allergens;
 
-    #[ORM\ManyToMany(targetEntity: Diet::class, inversedBy: 'recipes')]
-    private Collection $diet;
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'recipes')]
+    private Collection $users;
 
     public function __construct()
     {
-        $this->user = new ArrayCollection();
-        $this->allergen = new ArrayCollection();
-        $this->diet = new ArrayCollection();
+        $this->diets = new ArrayCollection();
+        $this->allergens = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -173,65 +174,17 @@ class Recipes
     }
 
     /**
-     * @return Collection<int, User>
-     */
-    public function getUser(): Collection
-    {
-        return $this->user;
-    }
-
-    public function addUser(User $user): self
-    {
-        if (!$this->user->contains($user)) {
-            $this->user->add($user);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): self
-    {
-        $this->user->removeElement($user);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Allergen>
-     */
-    public function getAllergen(): Collection
-    {
-        return $this->allergen;
-    }
-
-    public function addAllergen(Allergen $allergen): self
-    {
-        if (!$this->allergen->contains($allergen)) {
-            $this->allergen->add($allergen);
-        }
-
-        return $this;
-    }
-
-    public function removeAllergen(Allergen $allergen): self
-    {
-        $this->allergen->removeElement($allergen);
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Diet>
      */
-    public function getDiet(): Collection
+    public function getDiets(): Collection
     {
-        return $this->diet;
+        return $this->diets;
     }
 
     public function addDiet(Diet $diet): self
     {
-        if (!$this->diet->contains($diet)) {
-            $this->diet->add($diet);
+        if (!$this->diets->contains($diet)) {
+            $this->diets->add($diet);
         }
 
         return $this;
@@ -239,8 +192,61 @@ class Recipes
 
     public function removeDiet(Diet $diet): self
     {
-        $this->diet->removeElement($diet);
+        $this->diets->removeElement($diet);
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Allergen>
+     */
+    public function getAllergens(): Collection
+    {
+        return $this->allergens;
+    }
+
+    public function addAllergen(Allergen $allergen): self
+    {
+        if (!$this->allergens->contains($allergen)) {
+            $this->allergens->add($allergen);
+        }
+
+        return $this;
+    }
+
+    public function removeAllergen(Allergen $allergen): self
+    {
+        $this->allergens->removeElement($allergen);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->addRecipe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeRecipe($this);
+        }
+
+        return $this;
+    }
+
+   
 }

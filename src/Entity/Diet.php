@@ -18,21 +18,18 @@ class Diet
     #[ORM\Column(length: 255)]
     private ?string $Type = null;
 
-    #[ORM\ManyToMany(targetEntity: Recipes::class, mappedBy: 'diet')]
-    private Collection $recipes;
-
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'diet')]
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'diets')]
     private Collection $users;
 
-    #[ORM\ManyToMany(targetEntity: user::class, inversedBy: 'diets')]
-    private Collection $relation;
+    #[ORM\ManyToMany(targetEntity: Recipes::class, mappedBy: 'diets')]
+    private Collection $recipes;
 
     public function __construct()
     {
-        $this->recipes = new ArrayCollection();
         $this->users = new ArrayCollection();
-        $this->relation = new ArrayCollection();
+        $this->recipes = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -47,6 +44,39 @@ class Diet
     public function setType(string $Type): self
     {
         $this->Type = $Type;
+
+        return $this;
+    }
+
+    
+    public function __toString() {
+
+        return $this->getType();
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->addDiet($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeDiet($this);
+        }
 
         return $this;
     }
@@ -78,59 +108,4 @@ class Diet
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
-    }
-
-    public function addUser(User $user): self
-    {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
-            $user->addDiet($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): self
-    {
-        if ($this->users->removeElement($user)) {
-            $user->removeDiet($this);
-        }
-
-        return $this;
-    }
-
-    public function __toString() {
-
-        return $this->getType();
-    }
-
-    /**
-     * @return Collection<int, user>
-     */
-    public function getRelation(): Collection
-    {
-        return $this->relation;
-    }
-
-    public function addRelation(user $relation): self
-    {
-        if (!$this->relation->contains($relation)) {
-            $this->relation->add($relation);
-        }
-
-        return $this;
-    }
-
-    public function removeRelation(user $relation): self
-    {
-        $this->relation->removeElement($relation);
-
-        return $this;
-    }
 }

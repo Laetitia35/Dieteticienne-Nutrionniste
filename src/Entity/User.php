@@ -35,28 +35,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $lastname = null;
 
-    #[ORM\ManyToMany(targetEntity: Recipes::class, mappedBy: 'user')]
-    private Collection $recipes;
+    #[ORM\ManyToMany(targetEntity: Diet::class, inversedBy: 'users')]
+    private Collection $diets;
 
-    #[ORM\ManyToMany(targetEntity: Allergen::class, mappedBy: 'user')]
-    private Collection $allergen;
-
-    #[ORM\ManyToMany(targetEntity: Diet::class, mappedBy: 'user')]
-    private Collection $diet;
-
-    #[ORM\ManyToMany(targetEntity: Allergen::class, mappedBy: 'user')]
+    #[ORM\ManyToMany(targetEntity: Allergen::class, inversedBy: 'users')]
     private Collection $allergens;
 
-    #[ORM\ManyToMany(targetEntity: Diet::class, mappedBy: 'relation')]
-    private Collection $diets;
+    #[ORM\ManyToMany(targetEntity: Recipes::class, inversedBy: 'users')]
+    private Collection $recipes;
 
     public function __construct()
     {
-        $this->recipes = new ArrayCollection();
-        $this->allergen = new ArrayCollection();
-        $this->diet = new ArrayCollection();
-        $this->allergens = new ArrayCollection();
         $this->diets = new ArrayCollection();
+        $this->allergens = new ArrayCollection();
+        $this->recipes = new ArrayCollection();
     }
 
     
@@ -156,68 +148,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Recipes>
-     */
-    public function getRecipes(): Collection
-    {
-        return $this->recipes;
-    }
-
-    public function addRecipe(Recipes $recipe): self
-    {
-        if (!$this->recipes->contains($recipe)) {
-            $this->recipes->add($recipe);
-            $recipe->addUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeRecipe(Recipes $recipe): self
-    {
-        if ($this->recipes->removeElement($recipe)) {
-            $recipe->removeUser($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Allergen>
-     */
-    public function getAllergen(): Collection
-    {
-        return $this->allergen;
-    }
-
-    public function addAllergen(Allergen $allergen): self
-    {
-        if (!$this->allergen->contains($allergen)) {
-            $this->allergen->add($allergen);
-        }
-
-        return $this;
-    }
-
-    public function removeAllergen(Allergen $allergen): self
-    {
-        $this->allergen->removeElement($allergen);
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Diet>
      */
-    public function getDiet(): Collection
+    public function getDiets(): Collection
     {
-        return $this->diet;
+        return $this->diets;
     }
 
     public function addDiet(Diet $diet): self
     {
-        if (!$this->diet->contains($diet)) {
-            $this->diet->add($diet);
+        if (!$this->diets->contains($diet)) {
+            $this->diets->add($diet);
         }
 
         return $this;
@@ -225,7 +166,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeDiet(Diet $diet): self
     {
-        $this->diet->removeElement($diet);
+        $this->diets->removeElement($diet);
 
         return $this;
     }
@@ -238,11 +179,46 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->allergens;
     }
 
-    /**
-     * @return Collection<int, Diet>
-     */
-    public function getDiets(): Collection
+    public function addAllergen(Allergen $allergen): self
     {
-        return $this->diets;
+        if (!$this->allergens->contains($allergen)) {
+            $this->allergens->add($allergen);
+        }
+
+        return $this;
     }
+
+    public function removeAllergen(Allergen $allergen): self
+    {
+        $this->allergens->removeElement($allergen);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Recipes>
+     */
+    public function getRecipes(): Collection
+    {
+        return $this->recipes;
+    }
+
+    public function addRecipe(Recipes $recipe): self
+    {
+        if (!$this->recipes->contains($recipe)) {
+            $this->recipes->add($recipe);
+        }
+
+        return $this;
+    }
+
+    public function removeRecipe(Recipes $recipe): self
+    {
+        $this->recipes->removeElement($recipe);
+
+        return $this;
+    }
+
+   
+   
 }

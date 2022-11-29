@@ -6,9 +6,11 @@ use App\Service\PasswordGenerator;
 use App\Entity\Allergen;
 use App\Entity\Diet;
 use App\Entity\User;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -17,6 +19,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 
 class RegisterAdminType extends AbstractType
@@ -28,8 +31,8 @@ class RegisterAdminType extends AbstractType
             ->add('firstname', TextType::class, [
                 'label' =>'Prenom :',
                 #'constraint' => new Length([
-                #    'min' => 2,
-                #    'max' => 30,
+                    #'min' => 2,
+                    #'max' => 30,
                 #]),
                 'attr' =>[
                     'placeholder' => 'Merci de saisir le prenom du patient'
@@ -39,8 +42,8 @@ class RegisterAdminType extends AbstractType
             ->add ('lastname',  TextType::class, [
                 'label' =>'Nom :',
                 #'constraint' => new Length([
-                    #'min' => 2,
-                    #'max' => 30,
+                #    'min' => 2,
+                #    'max' => 30,
                 #]),
                 'attr' =>[
                     'placeholder' => 'Merci de saisir le nom du patient'
@@ -50,19 +53,12 @@ class RegisterAdminType extends AbstractType
             ->add('email',   EmailType::class, [
                 'label' =>'Email :',
                 #'constraint' => new Length ([
-                #    'min' => 2,
-                #    'max' => 60,
+                    #'min' => 2,
+                    #'max' => 60,
                 #]),
                 'attr' =>[
                     'placeholder' => "Merci de saisir l'adresse email du patient"
                 ]
-            ])
-            
-            ->add('button', ButtonType::class, [
-                'label' => "Obtenir un mot de passe générer"
-                 //'generator' => $passwordGenerator->generateRandomStrongPassword(10);
-                
-                
             ])
 
             ->add('password', RepeatedType::class, [
@@ -73,7 +69,7 @@ class RegisterAdminType extends AbstractType
                 'first_options' => [
                     'label' =>'Mot de passe générer :',
                     'attr' => [
-                        'placeholder' => 'Merci de saisir le mot de passe sécurisé générer aléatoirement.'
+                        'placeholder' => 'Merci de copier/coller le mot de passe sécurisé générer aléatoirement ci dessous.'
                     ]
                 ],
                 'second_options' => [
@@ -85,16 +81,42 @@ class RegisterAdminType extends AbstractType
                 ]
             ])
 
-            ->add('diet', ChoiceType::class, [
-                  'label' => 'Régime'
-                
+            ->add('diets', EntityType::class, [
+                'class' => Diet:: class,
+                'choice_label' =>'Type',
+                'placeholder' => "Choisir le ou les régime(s) du patient",
+                'label' => 'Type de Régimes : ',
+                'multiple' => true,
+                'query_builder' => function(EntityRepository $repository) {
+                    return $repository->createQueryBuilder('d')
+                      ->orderBy('d.Type', 'ASC');
+                    }, 'attr' => [
+                       'class' => 'form-select'
+                    ],  
             ])
 
-            ->add('allergen', ChoiceType::class, [
-                'label' => 'Allergène'
-               
+            ->add('allergens',EntityType::class, [
+                'class' => Allergen:: class,
+                'choice_label' =>'Type',
+                'placeholder' => "Choisir le ou les types d'allergie(s) du patient",
+                'label' => 'Type Allergie : ',
+                'multiple' => true,
+                'query_builder' => function(EntityRepository $repository) {
+                    return $repository->createQueryBuilder('a')
+                      ->orderBy('a.Type', 'ASC');
+                    }, 'attr' => [
+                       'class' => 'form-select'
+                    ],  
             ])
 
+            ->add('agreeTerms', CheckboxType::class, [
+                'mapped' => false,
+                'constraints' => [
+                    new IsTrue([
+                        'message' => "J'accepte de ne pas divulger les informations personnelles concernant mon utilisateur selon la RGPD.",
+                    ]),
+                ],
+            ])
 
             ->add('submit', SubmitType::class, [
                 'label' => "Valider l'inscription"

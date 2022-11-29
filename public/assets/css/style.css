@@ -4,11 +4,22 @@
     padding: 0;
 }
 
+html, body {
+    height : 100%;
+}
+
+
 body {
     background: #f3f3f7;
     position: relative;
     font-family: 'Open Sans', sans-serif;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
     
+}
+
+.content {
+    padding: 15px 15px 15px;
 }
 
 header {
@@ -79,10 +90,12 @@ p {
     color: #4b6584;
     font-weight: bold;
 }
+
 .account-item a:hover {
     text-decoration: none;
     color: #778ca3;
 }
+
 .avis_patients {
     height: 300px;
     width: 100%;
@@ -94,7 +107,13 @@ footer {
     color: white;
     text-align: center;
     width: 100%;
-    background-color: #609A7D;
-   
+    background-color: #609A7D; 
     
 }
+
+@media screen and (min-width: 768px) {
+
+    .content {
+        padding: 50px 80px 50px;
+    }
+}    

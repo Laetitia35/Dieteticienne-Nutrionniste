@@ -19,21 +19,18 @@ class Allergen
     #[ORM\Column (length: 255)]
     private ?string $Type = null;
 
-    #[ORM\ManyToMany(targetEntity: Recipes::class, mappedBy: 'allergen')]
-    private Collection $recipes;
-
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'allergen')]
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'allergens')]
     private Collection $users;
 
-    #[ORM\ManyToMany(targetEntity: user::class, inversedBy: 'allergens')]
-    private Collection $user;
+    #[ORM\ManyToMany(targetEntity: Recipes::class, mappedBy: 'allergens')]
+    private Collection $recipes;
 
     public function __construct()
     {
-        $this->recipes = new ArrayCollection();
         $this->users = new ArrayCollection();
-        $this->user = new ArrayCollection();
+        $this->recipes = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -52,7 +49,12 @@ class Allergen
 
         return $this;
     }
+    
+    public function __toString() {
 
+        return $this->getType();
+
+    }
 
     /**
      * @return Collection<int, User>
@@ -80,17 +82,32 @@ class Allergen
 
         return $this;
     }
-    
-    public function __toString() {
-
-        return $this->getType();
-    }
 
     /**
-     * @return Collection<int, user>
+     * @return Collection<int, Recipes>
      */
-    public function getUser(): Collection
+    public function getRecipes(): Collection
     {
-        return $this->user;
+        return $this->recipes;
     }
+
+    public function addRecipe(Recipes $recipe): self
+    {
+        if (!$this->recipes->contains($recipe)) {
+            $this->recipes->add($recipe);
+            $recipe->addAllergen($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRecipe(Recipes $recipe): self
+    {
+        if ($this->recipes->removeElement($recipe)) {
+            $recipe->removeAllergen($this);
+        }
+
+        return $this;
+    }
+
 }

@@ -6,6 +6,22 @@
 
     <h3>Inscription de vos patients</h3>
     
-    {{ form (form)  }}
+    {{ form_start(form) }}
+
+        {{ form_row(form.firstname)  }}
+        {{ form_row(form.lastname)  }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.password, {
+            label: 'Mot de passe à saisir :'
+        }) }}
+        <div class="alert alert-danger">{{ generator }}</div>
+        {{ form_row(form.diets)  }}
+        {{ form_row(form.allergens)  }}
+        {{ form_row(form.agreeTerms, {
+            label: "J'accepte les mentions légales"
+        }) }}
+        {{ form_row(form.submit) }}
+
+    {{ form_end(form) }}
    
 {% endblock %}
