@@ -21,6 +21,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class RegisterAdminType extends AbstractType
 {
@@ -84,29 +85,29 @@ class RegisterAdminType extends AbstractType
             ->add('diets', EntityType::class, [
                 'class' => Diet:: class,
                 'choice_label' =>'Type',
-                'placeholder' => "Choisir le ou les régime(s) du patient",
-                'label' => 'Type de Régimes : ',
+                'label' => 'Types de Régimes : ',
                 'multiple' => true,
                 'query_builder' => function(EntityRepository $repository) {
                     return $repository->createQueryBuilder('d')
                       ->orderBy('d.Type', 'ASC');
                     }, 'attr' => [
                        'class' => 'form-select'
-                    ],  
+                    ],
+                    'expanded' => true,  
             ])
 
             ->add('allergens',EntityType::class, [
                 'class' => Allergen:: class,
                 'choice_label' =>'Type',
-                'placeholder' => "Choisir le ou les types d'allergie(s) du patient",
-                'label' => 'Type Allergie : ',
+                'label' => 'Types Allergies : ',
                 'multiple' => true,
                 'query_builder' => function(EntityRepository $repository) {
                     return $repository->createQueryBuilder('a')
                       ->orderBy('a.Type', 'ASC');
                     }, 'attr' => [
                        'class' => 'form-select'
-                    ],  
+                    ],
+                    'expanded' => true,  
             ])
 
             ->add('agreeTerms', CheckboxType::class, [

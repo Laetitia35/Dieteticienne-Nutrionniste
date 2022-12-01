@@ -36,21 +36,22 @@ class DashboardController extends AbstractDashboardController
         // (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
         //
         // return $this->render('some/path/my-dashboard.html.twig');
+        
     }
 
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Sandrine Coupart');
+            ->setTitle('Sandrine Coupart - Administration')
+            ->renderContentMaximized();
     }
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('Utilisateur', 'fas fa-user', User::class);
-        yield MenuItem::linkToCrud('Recipes', 'fa fa-fork-knife', Recipes::class);
-        yield MenuItem::linkToCrud('Diet', 'fa fa-weight-scale', Diet::class);
-        yield MenuItem::linkToCrud('Allergen', 'fa fa-wheat-awn-circle-exclamation', Allergen::class);
-        
+        yield MenuItem::linkToDashboard("Panel d'administration", 'fa fa-home');
+        yield MenuItem::linkToCrud('Utilisateur', 'fa-solid fa-user', User::class);
+        yield MenuItem::linkToCrud('Recettes', 'fa-solid fa-utensils', Recipes::class);
+        yield MenuItem::linkToCrud('Régime', 'fa-solid fa-carrot', Diet::class);
+        yield MenuItem::linkToCrud('Allergène', "fa-solid fa-wheat-awn-circle-exclamation", Allergen::class);
     }
 }
