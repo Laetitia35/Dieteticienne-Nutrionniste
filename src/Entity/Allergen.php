@@ -22,13 +22,14 @@ class Allergen
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'allergens')]
     private Collection $users;
 
-    #[ORM\ManyToMany(targetEntity: Recipes::class, mappedBy: 'allergens')]
+    #[ORM\ManyToMany(targetEntity: Recipe::class, mappedBy: 'allergens')]
     private Collection $recipes;
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
         $this->recipes = new ArrayCollection();
+        
     }
 
 
@@ -84,14 +85,14 @@ class Allergen
     }
 
     /**
-     * @return Collection<int, Recipes>
+     * @return Collection<int, Recipe>
      */
     public function getRecipes(): Collection
     {
         return $this->recipes;
     }
 
-    public function addRecipe(Recipes $recipe): self
+    public function addRecipe(Recipe $recipe): self
     {
         if (!$this->recipes->contains($recipe)) {
             $this->recipes->add($recipe);
@@ -101,7 +102,7 @@ class Allergen
         return $this;
     }
 
-    public function removeRecipe(Recipes $recipe): self
+    public function removeRecipe(Recipe $recipe): self
     {
         if ($this->recipes->removeElement($recipe)) {
             $recipe->removeAllergen($this);
@@ -109,5 +110,6 @@ class Allergen
 
         return $this;
     }
+
 
 }

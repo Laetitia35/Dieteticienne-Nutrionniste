@@ -3,8 +3,9 @@
 namespace App\Controller;
 
 use App\Classe\Search;
-use App\Entity\Recipes;
+use App\Entity\Recipe;
 use App\Form\SearchType;
+use App\Repository\RecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,24 +16,34 @@ class RecipesController extends AbstractController
 {
     private $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager) {
+    public function __construct(EntityManagerInterface $entityManager) 
+    {
         $this->entityManager = $entityManager;
     }
 
     
     #[Route('/recettes', name: 'app_recipes')]
-    public function index(Request $request): Response
+    public function index(Request $request, EntityManagerInterface $entityManager, RecipeRepository $recipeRepository): Response
     {
+        
+        //$recipes = $this->entityManager->getRepository(Recipe::class)->findAll();
+        
         $search = new search();
         $form = $this->createForm(SearchType::class, $search);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-           $recipes = $this->entityManager->getRepository(Recipes::class)->findWithSearch($search);
+        
+            $recipes = $this->entityManager->getRepository(Recipe::class)->findWithSearch($search);
+
+            $entityManager->persist($recipes);
+            $entityManager->flush();
 
         } else {
-            $recipes = $this->entityManager->getRepository(Recipes::class)->findAll();
+            
+            //$recipes = $recipeRepository->findAll();
+            $recipes = $this->entityManager->getRepository(Recipe::class)->findAll();
             
         }
 
@@ -42,10 +53,10 @@ class RecipesController extends AbstractController
         ]);
     }
 
-    #[Route('/recette/{slug}', name: 'app_recipes/{slug}')]
+    #[Route('/recette/{slug}', name: 'app_recipe/{slug}')]
     public function show($slug): Response
     {
-        $recipe = $this->entityManager->getRepository(Recipes::class)-> findOneBy(['slug' => $slug]);
+        $recipe = $this->entityManager->getRepository(Recipe::class)-> findOneBy(['slug' => $slug]);
 
         if (!$recipe) {
             return $this->redirectToRoute('app_recipes');

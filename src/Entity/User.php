@@ -41,14 +41,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Allergen::class, inversedBy: 'users')]
     private Collection $allergens;
 
-    #[ORM\ManyToMany(targetEntity: Recipes::class, inversedBy: 'users')]
+    #[ORM\ManyToMany(targetEntity: Recipe::class, inversedBy: 'users')]
     private Collection $recipes;
+
 
     public function __construct()
     {
         $this->diets = new ArrayCollection();
         $this->allergens = new ArrayCollection();
         $this->recipes = new ArrayCollection();
+       
     }
 
     
@@ -195,15 +197,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    
+    public function __toString() {
+
+        return $this->lastname;
+    }
+
     /**
-     * @return Collection<int, Recipes>
+     * @return Collection<int, Recipe>
      */
     public function getRecipes(): Collection
     {
         return $this->recipes;
     }
 
-    public function addRecipe(Recipes $recipe): self
+    public function addRecipe(Recipe $recipe): self
     {
         if (!$this->recipes->contains($recipe)) {
             $this->recipes->add($recipe);
@@ -212,13 +220,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function removeRecipe(Recipes $recipe): self
+    public function removeRecipe(Recipe $recipe): self
     {
         $this->recipes->removeElement($recipe);
 
         return $this;
     }
 
-   
    
 }

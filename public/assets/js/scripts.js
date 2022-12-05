@@ -30,10 +30,10 @@ function addAvis(event) {
     addComment.textContent = commentaire;
     avis_list.prepend(addComment);
 
-    //let addNote = document.createElement("p");
-    //addNote.classList.add("note");
-    //addNote.textContent = note;
-    //avis_list.prepend(addNote);
+    let addNote = document.createElement("p");
+    addNote.classList.add("note");
+    addNote.textContent = note;
+    avis_list.prepend(addNote);
 }
 
 

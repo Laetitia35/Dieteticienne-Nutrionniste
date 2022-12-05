@@ -21,8 +21,9 @@ class Diet
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'diets')]
     private Collection $users;
 
-    #[ORM\ManyToMany(targetEntity: Recipes::class, mappedBy: 'diets')]
+    #[ORM\ManyToMany(targetEntity: Recipe::class, mappedBy: 'diets')]
     private Collection $recipes;
+
 
     public function __construct()
     {
@@ -82,14 +83,14 @@ class Diet
     }
 
     /**
-     * @return Collection<int, Recipes>
+     * @return Collection<int, Recipe>
      */
     public function getRecipes(): Collection
     {
         return $this->recipes;
     }
 
-    public function addRecipe(Recipes $recipe): self
+    public function addRecipe(Recipe $recipe): self
     {
         if (!$this->recipes->contains($recipe)) {
             $this->recipes->add($recipe);
@@ -99,7 +100,7 @@ class Diet
         return $this;
     }
 
-    public function removeRecipe(Recipes $recipe): self
+    public function removeRecipe(Recipe $recipe): self
     {
         if ($this->recipes->removeElement($recipe)) {
             $recipe->removeDiet($this);

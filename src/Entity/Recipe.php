@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\RecipesRepository;
+use App\Repository\RecipeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: RecipesRepository::class)]
-class Recipes
+#[ORM\Entity(repositoryClass: RecipeRepository::class)]
+class Recipe
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -19,28 +19,28 @@ class Recipes
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $Description = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $description = null;
 
     #[ORM\Column]
-    private ?int $Preparation_Time = null;
+    private ?int $preparation_time = null;
 
     #[ORM\Column]
     private ?int $timeout = null;
 
     #[ORM\Column]
-    private ?int $Cooking_Time = null;
+    private ?int $cooking_time = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $Ingredients = null;
+    private ?string $ingredients = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $Stage = null;
+    private ?string $stage = null;
 
     #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $illustration = null;
 
     #[ORM\ManyToMany(targetEntity: Diet::class, inversedBy: 'recipes')]
@@ -79,24 +79,24 @@ class Recipes
 
     public function getDescription(): ?string
     {
-        return $this->Description;
+        return $this->description;
     }
 
-    public function setDescription(string $Description): self
+    public function setDescription(?string $description): self
     {
-        $this->Description = $Description;
+        $this->description = $description;
 
         return $this;
     }
 
     public function getPreparationTime(): ?int
     {
-        return $this->Preparation_Time;
+        return $this->preparation_time;
     }
 
-    public function setPreparationTime(int $Preparation_Time): self
+    public function setPreparationTime(int $preparation_time): self
     {
-        $this->Preparation_Time = $Preparation_Time;
+        $this->preparation_time = $preparation_time;
 
         return $this;
     }
@@ -115,36 +115,36 @@ class Recipes
 
     public function getCookingTime(): ?int
     {
-        return $this->Cooking_Time;
+        return $this->cooking_time;
     }
 
-    public function setCookingTime(int $Cooking_Time): self
+    public function setCookingTime(int $cooking_time): self
     {
-        $this->Cooking_Time = $Cooking_Time;
+        $this->cooking_time = $cooking_time;
 
         return $this;
     }
 
     public function getIngredients(): ?string
     {
-        return $this->Ingredients;
+        return $this->ingredients;
     }
 
-    public function setIngredients(string $Ingredients): self
+    public function setIngredients(string $ingredients): self
     {
-        $this->Ingredients = $Ingredients;
+        $this->ingredients = $ingredients;
 
         return $this;
     }
 
     public function getStage(): ?string
     {
-        return $this->Stage;
+        return $this->stage;
     }
 
-    public function setStage(string $Stage): self
+    public function setStage(string $stage): self
     {
-        $this->Stage = $Stage;
+        $this->stage = $stage;
 
         return $this;
     }
@@ -166,11 +166,18 @@ class Recipes
         return $this->illustration;
     }
 
-    public function setIllustration(string $illustration): self
+    public function setIllustration(?string $illustration): self
     {
         $this->illustration = $illustration;
 
         return $this;
+    }
+
+
+    public function __toString() {
+
+        return $this->title;
+
     }
 
     /**
@@ -247,6 +254,4 @@ class Recipes
 
         return $this;
     }
-
-   
 }
