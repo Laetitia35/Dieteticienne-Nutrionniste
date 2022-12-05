@@ -23,10 +23,8 @@ class RecipesController extends AbstractController
 
     
     #[Route('/recettes', name: 'app_recipes')]
-    public function index(Request $request, EntityManagerInterface $entityManager, RecipeRepository $recipeRepository): Response
+    public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
-        
-        //$recipes = $this->entityManager->getRepository(Recipe::class)->findAll();
         
         $search = new search();
         $form = $this->createForm(SearchType::class, $search);
@@ -42,13 +40,11 @@ class RecipesController extends AbstractController
 
         } else {
             
-            //$recipes = $recipeRepository->findAll();
             $recipes = $this->entityManager->getRepository(Recipe::class)->findAll();
-            
         }
 
         return $this->render('recipes/index.html.twig', [
-            'recipes' => '$recipes',
+            'recipes' => $recipes,
             'form' => $form->createView()
         ]);
     }
@@ -63,7 +59,7 @@ class RecipesController extends AbstractController
        }
 
         return $this->render('recipes/show.html.twig', [
-            'recipe' => '$recipe',
+            'recipe' => $recipe,
             
         ]);
     }
