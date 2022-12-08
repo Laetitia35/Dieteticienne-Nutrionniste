@@ -24,30 +24,35 @@ class RecipeRepository extends ServiceEntityRepository
 
     /**
      * Requète qui permet de récupérer les produits en fonction de la recherche de l'utilisateur
-     * @param Recipe[]
+     * @return Recipe[]
      */
     public function findWithSearch (Search $search)
     {
-        $query = $this
+        $queryDiet = $this
             ->createQueryBuilder('r')
-            ->select('d', 'a', 'r')
-            ->join('r.diet' && 'r.allergen', 'r');
+            ->select('d', 'r')
+            ->join('r.diets', 'd');
 
-        if(!empty($search->diet)) {
-            $query = $query
-                ->andWhere('d.id IN (:diet)')
-                ->setParameter('diet', $search->diet );
+        $queryAllergen = $this
+        ->createQueryBuilder('r')
+        ->select('a', 'r')
+        ->join('r.allergens', 'a'); 
+        
+        if(!empty($search->diets)) {
+            $query = $queryDiet 
+                ->andWhere('d.id IN (:diets)')
+                ->setParameter('diets', $search->diets);
         }  
 
-        if(!empty( $search->allergen)) {
-            $query = $query
-                ->andWhere('a.id IN (:allergen)')
-                ->setParameter('allergen', $search->allergen);
+        if(!empty( $search->allergens)) {
+            $query = $queryAllergen
+                ->orWhere('a.id IN (:allergens)')
+                ->setParameter('allergens', $search->allergens);
         }  
 
         if (!empty($search->string)) {
-            $query = $query
-                ->andWhere('r.title LIKE :string') 
+            $query = $queryAllergen 
+                ->orWhere('r.title LIKE :string') 
                 ->setParameter('string', "%{$search->string}%");
         }
         

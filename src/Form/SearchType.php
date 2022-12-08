@@ -26,16 +26,16 @@ class SearchType extends AbstractType
                 ]
             ])
 
-            ->add ('allergen', EntityType::class, [
-                    'label' => false,
+            ->add ('allergens', EntityType::class, [
+                    'label' => "Types d'allergènes :",
                     'required' => false,
                     'class' => Allergen::class,
                     'multiple'=> true,
                     'expanded' => true
             ])
 
-            ->add ('diet', EntityType::class, [
-                    'label' => false,
+            ->add ('diets', EntityType::class, [
+                    'label' => 'Types de régimes :',
                     'required' => false,
                     'class' => Diet::class,
                     'multiple'=> true,

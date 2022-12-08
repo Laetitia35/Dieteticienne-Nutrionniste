@@ -9,6 +9,7 @@ use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -53,5 +54,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Recettes', 'fa-solid fa-utensils', Recipe::class);
         yield MenuItem::linkToCrud('Régime', 'fa-solid fa-carrot', Diet::class);
         yield MenuItem::linkToCrud('Allergène', "fa-solid fa-wheat-awn-circle-exclamation", Allergen::class);
+
     }
 }

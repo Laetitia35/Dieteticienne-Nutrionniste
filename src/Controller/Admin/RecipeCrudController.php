@@ -33,24 +33,22 @@ class RecipeCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('title'),
+            TextField::new('title','Titre'),
             SlugField::new('slug')->setTargetFieldName('title'),
             TextField::new('Description'),
-            IntegerField::new('Preparation_Time'),
-            IntegerField::new('timeout'),
-            IntegerField::new('Cooking_Time'),
+            IntegerField::new('Preparation_Time', 'Temps de préparation'),
+            IntegerField::new('timeout', 'Temps de repos'),
+            IntegerField::new('Cooking_Time', 'Temps de cuisson'),
             TextEditorField::new('Ingredients'),
-            TextEditorField::new('Stage'),
-            ImageField::new('illustration')
+            TextEditorField::new('Stage', 'Etape de réalisation'),
+            ImageField::new('illustration', 'Image')
             ->setBasePath('images/')
             ->setUploadDir('public/images/')
             ->setUploadedFileNamePattern('[randomhash].[extension]')
             ->setRequired(false),
-            AssociationField::new('diets'),
-            AssociationField::new('allergens'),
-            //AssociationField::new('users'),
-
-
+            AssociationField::new('diets', 'Régimes'),
+            AssociationField::new('allergens', 'Allergènes'),
+            AssociationField::new('users', 'Utilisateurs'),
         ];
     }
     

@@ -1,41 +1,3 @@
-///form.onsubmit = (e) => {
-   // avis_patients.textContent = `Prenom: ${firstname.value}, avis: ${commentaire.value},
-    //note : ${note.value}`.
-
-   // e.preventDefault();
-    
-//}
-
-// AVIS Selecteurs
-
-let firstname = document.querySelector("#firstname");
-let commentaire = document.querySelector("#commentaire");
-let note = document.querySelector("#note");
-let buttonAvis= document.querySelector("#buttonAvis");
-
-// écouteurs évenements
-buttonAvis.addEventListener("click", addAvis);
-
-//functions
-function addAvis(event) {
-    event.preventDefault();
-
-    let addFirstname = document.createElement("h5");
-    addFirstname.classList.add("firstname");
-    addFirstname.textContent = firstname;
-    avis_list.prepend(addFirstname);
-
-    let addComment = document.createElement("p");
-    addComment.classList.add("commentaire");
-    addComment.textContent = commentaire;
-    avis_list.prepend(addComment);
-
-    let addNote = document.createElement("p");
-    addNote.classList.add("note");
-    addNote.textContent = note;
-    avis_list.prepend(addNote);
-}
-
 
 // Stars
 window.onload = () => {
@@ -45,8 +7,9 @@ window.onload = () => {
     // On va chercher l'input
     const note = document.querySelector("#note");
 
-    // On boucle sur les étoiles pour le ajouter des écouteurs d'évènements
+    // On boucle sur les étoiles pour leur ajouter des écouteurs d'évènements
     for(star of stars){
+        console.log(star)
         // On écoute le survol
         star.addEventListener("mouseover", function() {
             resetStars();
@@ -86,7 +49,7 @@ window.onload = () => {
                 star.style.color = "black";
                 star.classList.add("lar");
                 star.classList.remove("las");
-            }else{
+            } else{
                 star.style.color = "red";
                 star.classList.add("las");
                 star.classList.remove("lar");
@@ -98,3 +61,4 @@ window.onload = () => {
 function btn_auth() {
     alert(" Il faut être un patient du Docteur Sandrine Coupart pour pouvoir s'identifier et bénéficier de certaines fonctionnalités du site web.");
 }
+

@@ -3,16 +3,14 @@
 namespace App\Controller;
 
 use App\Classe\Search;
-use App\Entity\Recipe;
 use App\Form\SearchType;
-use App\Repository\RecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class RecipesController extends AbstractController
+class RecipesUserController extends AbstractController
 {
     private $entityManager;
 
@@ -21,12 +19,11 @@ class RecipesController extends AbstractController
         $this->entityManager = $entityManager;
     }
 
-    
-    #[Route('/recettes', name: 'app_recipes')]
-    public function index(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/recettes-patients', name: 'app_recipes_user')]
+    public function index(Request $request): Response
     {
         
-        $search = new search();
+        $search = new Search();
         $form = $this->createForm(SearchType::class, $search);
 
         $form->handleRequest($request);
@@ -40,13 +37,13 @@ class RecipesController extends AbstractController
             $recipes = $this->entityManager->getRepository(Recipe::class)->findAll();
         }
 
-        return $this->render('recipes/index.html.twig', [
+        return $this->render('recipes_user/index.html.twig', [
             'recipes' => $recipes,
             'form' => $form->createView()
         ]);
     }
 
-    #[Route("/recette/{slug}", name: 'app_recipe')]
+    #[Route("/recette-patient/{slug}", name: 'app_recipe_user')]
     public function show($slug) : Response
     {
         $recipe = $this->entityManager->getRepository(Recipe::class)->findOneBy(['slug' => $slug]);
@@ -54,11 +51,9 @@ class RecipesController extends AbstractController
         if (!$recipe) {
             return $this->redirectToRoute('app_recipes');
         }
-        return $this->render('recipes/show.html.twig', [
+        return $this->render('recipes_user/show.html.twig', [
             'recipe' => $recipe,
         ]);
 
     }
-
-    
 }

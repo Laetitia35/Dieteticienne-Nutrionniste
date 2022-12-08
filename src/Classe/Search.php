@@ -15,10 +15,10 @@ class Search
      /** 
     * @var Allergen [] 
     */
-    public $allergen = [];
+    public $allergens = [];
 
      /** 
     * @var Diet [] 
     */
-    public $diet = [];
+    public $diets = [];
 }
