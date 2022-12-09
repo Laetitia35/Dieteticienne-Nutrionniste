@@ -70,10 +70,10 @@
 
         <h5 class="text-center">N'hesiter pas à me laisser un avis</h5>
         
-        <form class="form-group" id="form">
+        <form class="form-group" name="avis" id="form" method="GET">
           <div class="col">
             <label for="firstname">Votre Prénom</label>
-            <input type="text" class="firstname form-control" id="firstname" placeholder ="Votre Prénom">
+            <input type="text" class="firstname form-control" name="firstname" id="firstname" placeholder ="Votre Prénom">
           </div>
           <br>
           <div class="col">
@@ -90,10 +90,10 @@
           </div>
           <p> Note sur 5 étoiles</p>
           <input type="hidden" name="note form-check form-check-inline" id="note" value="0">
-          <button type="submit" class="buttonAvis btn btn-primary">Publier votre avis</button>
+          <button type="submit" value="avis" class="buttonAvis btn btn-primary" id="buttonAvis">Publier votre avis</button>
           
         </form>
-    
+        <p style="color: red;" id="erreur"></p>
         {% endif %}
 
         <div class="avis_patients " id="avis_patients">

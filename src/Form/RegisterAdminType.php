@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Service\PasswordGenerator;
 use App\Entity\Allergen;
 use App\Entity\Diet;
+use App\Entity\Recipe;
 use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -104,6 +105,20 @@ class RegisterAdminType extends AbstractType
                 'query_builder' => function(EntityRepository $repository) {
                     return $repository->createQueryBuilder('a')
                       ->orderBy('a.Type', 'ASC');
+                    }, 'attr' => [
+                       'class' => 'form-select'
+                    ],
+                    'expanded' => true,  
+            ])
+
+            ->add('recipes',EntityType::class, [
+                'class' => Recipe:: class,
+                'choice_label' =>'title',
+                'label' => 'Recettes personnalisées : ',
+                'multiple' => true,
+                'query_builder' => function(EntityRepository $repository) {
+                    return $repository->createQueryBuilder('a')
+                      ->orderBy('a.title', 'ASC');
                     }, 'attr' => [
                        'class' => 'form-select'
                     ],

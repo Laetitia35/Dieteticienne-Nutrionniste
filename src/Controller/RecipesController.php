@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Classe\Search;
 use App\Entity\Recipe;
+use App\Entity\User;
 use App\Form\SearchType;
 use App\Repository\RecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -38,6 +39,7 @@ class RecipesController extends AbstractController
         } else {
             
             $recipes = $this->entityManager->getRepository(Recipe::class)->findAll();
+            
         }
 
         return $this->render('recipes/index.html.twig', [

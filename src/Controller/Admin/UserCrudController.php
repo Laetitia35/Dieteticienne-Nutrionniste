@@ -31,15 +31,13 @@ class UserCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(),
-            TextField::new('firstname'),
-            TextField::new('lastname'),
+            TextField::new('firstname','prénom'),
+            TextField::new('lastname', 'nom'),
             EmailField::new('email'),
-            TextField::new('password')->hideOnForm(),
-            AssociationField::new('diets'),
-            AssociationField::new('allergens'),
-            //AssociationField::new('recipes'),
-            
-
+            TextField::new('password','mot de passe')->hideOnForm(),
+            AssociationField::new('diets', 'régimes'),
+            AssociationField::new('allergens', 'allergènes'),
+            AssociationField::new('recipes', 'recettes'),
         ];
     }
     

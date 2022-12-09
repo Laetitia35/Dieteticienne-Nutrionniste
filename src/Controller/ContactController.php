@@ -19,19 +19,21 @@ class ContactController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form ->isValid()) {
-            $this->addFlash('notice', "Merci de m'avoir contacter. Je vous répond dans les meilleurs délais.");
+            $this->addFlash('notice', "Merci de m'avoir contacter. Je vous répondrais dans les meilleurs délais.");
 
              
             $content = "Bonjour </br>Vous avez reçus un message de <strong>".$form->getData()['prenom']." ".$form->getData()['nom']."</strong></br>Adresse email : <strong>".$form->getData()['email']."</strong> </br>Message : ".$form->getData()['content']."</br></br>"; 
 
-            $content = (new Email())
-                -> from ('contact@sandrine-coupart.fr')
-                -> to()['email'] 
+            $email = (new Email())
+                -> from ('test@test.fr')
+                -> to('contact@sandrine-coupart.fr')
                 -> subject ('Vous avez reçu une demande de contact')
-                -> text ()['content'];
+                -> text ($content);
                 
-            $mailer->send($content);
+            $mailer->send($email);
            
+            $this->addFlash('success', 'Votre message à bien été envoyé.');
+            return $this->redirectToRoute('app_home_page');
         }
 
         return $this->render('contact/index.html.twig', [

@@ -15,8 +15,11 @@
             label: 'Mot de passe à saisir :'
         }) }}
         <div class="alert alert-danger">{{ generator }}</div>
-        {{ form_row(form.diets)  }}
-        {{ form_row(form.allergens)  }}
+        <div class="row">
+        <div class="col-md-4">{{ form_row(form.allergens)  }}</div>
+        <div class="col-md-4">{{ form_row(form.diets)  }}</div>
+        <div class="col-md-4">{{ form_row(form.recipes)  }}</div>
+        </div>
         {{ form_row(form.agreeTerms, {
             label: "J'accepte les mentions légales"
         }) }}

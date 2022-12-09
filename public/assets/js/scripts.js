@@ -9,7 +9,6 @@ window.onload = () => {
 
     // On boucle sur les étoiles pour leur ajouter des écouteurs d'évènements
     for(star of stars){
-        console.log(star)
         // On écoute le survol
         star.addEventListener("mouseover", function() {
             resetStars();
@@ -62,3 +61,34 @@ function btn_auth() {
     alert(" Il faut être un patient du Docteur Sandrine Coupart pour pouvoir s'identifier et bénéficier de certaines fonctionnalités du site web.");
 }
 
+// AVIS Selecteurs
+
+let firstname = document.getElementById("firstname");
+let commentaire = document.getElementById("commentaire");
+let note = document.getElementById("note");
+let buttonAvis= document.getElementById("buttonAvis");
+
+// écouteurs évenements
+buttonAvis.addEventListener("click", addAvis);
+
+//functions
+function addAvis(event) {
+    event.preventDefault();
+
+    let addFirstname = document.createElement("h6");
+    addFirstname.classList.add("firstname");
+    addFirstname.textContent = firstname;
+    avis_list.prepend(addFirstname);
+
+    let addComment = document.createElement("p");
+    addComment.classList.add("commentaire");
+    addComment.textContent = commentaire;
+    avis_list.prepend(addComment);
+
+    //let addNote = document.createElement("p");
+    //addNote.classList.add("note");
+    //addNote.textContent = note;
+    //avis_list.prepend(addNote);
+}
+
+console.log(addAvis)

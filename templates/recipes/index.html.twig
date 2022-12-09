@@ -18,7 +18,7 @@
         <div class="row recipe-container">
             
           {% for recipe in recipes %}
-            
+  
               <div class="col-md-4">
                 <div class="recipe-item text-center">
                   <a href="{#{ path('app_recipe', {"slug": recipe.slug}) }#}"><img src="/images/{{ recipe.illustration }}" alt="{{ recipe.title }}" class="img-fluid"></a>
@@ -26,6 +26,7 @@
                   <span>{{ recipe.description }}</span>
                 </div>
               </div>
+  
           {% endfor %}
         </div>
       
