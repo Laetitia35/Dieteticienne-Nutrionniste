@@ -21,7 +21,8 @@
   
               <div class="col-md-4">
                 <div class="recipe-item text-center">
-                  <a href="{#{ path('app_recipe', {"slug": recipe.slug}) }#}"><img src="/images/{{ recipe.illustration }}" alt="{{ recipe.title }}" class="img-fluid"></a>
+                  <a href="{#{ path('app_recipe', {"slug": recipe.slug}) }#}"><img src="/images/{{ recipe.illustration }}" alt="{{      
+                     recipe.title }}" class="img-fluid"></a>
                   <h5>{{ recipe.title }}</h5>
                   <span>{{ recipe.description }}</span>
                 </div>
@@ -32,5 +33,4 @@
       
     </div>
   </div>
-
 {% endblock %}

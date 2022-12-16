@@ -44,16 +44,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: Recipe::class, inversedBy: 'users')]
     private Collection $recipes;
 
-
     public function __construct()
     {
         $this->diets = new ArrayCollection();
         $this->allergens = new ArrayCollection();
         $this->recipes = new ArrayCollection();
-       
     }
 
-    
     public function getId(): ?int
     {
         return $this->id;

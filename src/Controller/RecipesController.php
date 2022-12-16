@@ -4,9 +4,7 @@ namespace App\Controller;
 
 use App\Classe\Search;
 use App\Entity\Recipe;
-use App\Entity\User;
 use App\Form\SearchType;
-use App\Repository\RecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +22,7 @@ class RecipesController extends AbstractController
 
     
     #[Route('/recettes', name: 'app_recipes')]
-    public function index(Request $request, EntityManagerInterface $entityManager): Response
+    public function index(Request $request): Response
     {
         
         $search = new search();
