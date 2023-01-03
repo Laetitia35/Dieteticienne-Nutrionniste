@@ -1,4 +1,3 @@
-
 // Stars
 window.onload = () => {
     // On va chercher toutes les étoiles
@@ -27,7 +26,6 @@ window.onload = () => {
                 previousStar = previousStar.previousElementSibling;
             }
         });
-
         // On écoute le clic
         star.addEventListener("click", function(){
             note.value = this.dataset.value;
@@ -56,39 +54,39 @@ window.onload = () => {
         }
     }
 }
-
 function btn_auth() {
     alert(" Il faut être un patient du Docteur Sandrine Coupart pour pouvoir s'identifier et bénéficier de certaines fonctionnalités du site web.");
 }
-
 // AVIS Selecteurs
 
 let firstname = document.getElementById("firstname");
-let commentaire = document.getElementById("commentaire");
+let comment = document.getElementById("comment");
 let note = document.getElementById("note");
-let buttonAvis= document.getElementById("buttonAvis");
+let buttonReview = document.getElementById("buttonReview");
 
 // écouteurs évenements
-buttonAvis.addEventListener("click", addAvis);
+buttonReview.addEventListener("click", addReview);
 
 //functions
-function addAvis(event) {
-    event.preventDefault();
+function addReview() {
+    //event.preventDefault();
 
-    let addFirstname = document.createElement("h6");
-    addFirstname.classList.add("firstname");
-    addFirstname.textContent = firstname;
-    avis_list.prepend(addFirstname);
+    let addNote = document.createElement("p");
+    addNote.classList.add("note");
+    addNote.textContent = `Note sur 5 : ${note.value}`; 
+    localStorage.setItem('note', note.value);
+    Review_list.prepend(addNote);
 
     let addComment = document.createElement("p");
-    addComment.classList.add("commentaire");
-    addComment.textContent = commentaire;
-    avis_list.prepend(addComment);
-
-    //let addNote = document.createElement("p");
-    //addNote.classList.add("note");
-    //addNote.textContent = note;
-    //avis_list.prepend(addNote);
+    addComment.classList.add("comment");
+    addComment.textContent = `Commentaire : ${comment.value}`;
+    localStorage.setItem('comment', comment.value)
+    Review_list.prepend(addComment);
+    
+    let addFirstname = document.createElement("h6");
+    addFirstname.classList.add("firstname");
+    addFirstname.textContent = `Avis laisser par ${localStorage.getItem("firstname")}`;
+    localStorage.setItem('firstname', firstname.value); 
+    Review_list.prepend(addFirstname);
 }
-
-console.log(addAvis)
+ 

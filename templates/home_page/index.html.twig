@@ -78,7 +78,7 @@
           <br>
           <div class="col">
               <label for="commentaire">Votre commentaire</label>
-              <textarea class="commentaire form-control"  name="comment"  id="commentaire" placeholder="votre avis"></textarea>
+              <textarea class="commentaire form-control"  name="comment"  id="comment" placeholder="votre avis"></textarea>
           </div>
           <br>
           <div class="stars">
@@ -90,17 +90,22 @@
           </div>
           <p> Note sur 5 étoiles</p>
           <input type="hidden" name="note form-check form-check-inline" id="note" value="0">
-          <button type="submit" value="avis" class="buttonAvis btn btn-primary" id="buttonAvis">Publier votre avis</button>
-          
+          <button type="button"  class="buttonReview btn btn-primary" id="buttonReview">Publier votre avis</button>
+
         </form>
         <p style="color: red;" id="erreur"></p>
+        
         {% endif %}
 
-        <div class="avis_patients " id="avis_patients">
+        <div class="Review_patients " id="Review_patients">
           <h5 class="text-center">Les avis de mes patients</h5>
-          <span class="avis_list" id="avis_list"></span>
+          <div class="card w-80">
+            <div class="card-body">
+            <span class="Review_list" id="Review_list">
+            </div>
+            </span>
+          </div>
         </div>
-      
       </section>
       
     
