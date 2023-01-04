@@ -12,6 +12,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 
 class RecipeCrudController extends AbstractCrudController
 {
@@ -39,8 +40,8 @@ class RecipeCrudController extends AbstractCrudController
             IntegerField::new('Preparation_Time', 'Temps de préparation'),
             IntegerField::new('timeout', 'Temps de repos'),
             IntegerField::new('Cooking_Time', 'Temps de cuisson'),
-            TextEditorField::new('Ingredients'),
-            TextEditorField::new('Stage', 'Etape de réalisation'),
+            TextareaField::new('Ingredients')->renderAsHtml(),
+            TextareaField::new('Stage', 'Etape de réalisation')->renderAsHtml(),
             ImageField::new('illustration', 'Image')
             ->setBasePath('images/')
             ->setUploadDir('public/images/')
