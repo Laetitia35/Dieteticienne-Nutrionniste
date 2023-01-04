@@ -1,3 +1,4 @@
+
 // Stars
 window.onload = () => {
     // On va chercher toutes les étoiles
@@ -68,25 +69,27 @@ let buttonReview = document.getElementById("buttonReview");
 buttonReview.addEventListener("click", addReview);
 
 //functions
-function addReview() {
-    //event.preventDefault();
+function addReview(event) {
+    event.preventDefault();
 
-    let addNote = document.createElement("p");
-    addNote.classList.add("note");
-    addNote.textContent = `Note sur 5 : ${note.value}`; 
-    localStorage.setItem('note', note.value);
-    Review_list.prepend(addNote);
-
-    let addComment = document.createElement("p");
-    addComment.classList.add("comment");
-    addComment.textContent = `Commentaire : ${comment.value}`;
-    localStorage.setItem('comment', comment.value)
-    Review_list.prepend(addComment);
+        let addNote = document.createElement("p");
+        addNote.classList.add("note");
+        addNote.textContent = `Note sur 5 : ${note.value}`; 
+        localStorage.setItem('note', note.value);
+        Review_list.prepend(addNote);
     
-    let addFirstname = document.createElement("h6");
-    addFirstname.classList.add("firstname");
-    addFirstname.textContent = `Avis laisser par ${localStorage.getItem("firstname")}`;
-    localStorage.setItem('firstname', firstname.value); 
-    Review_list.prepend(addFirstname);
-}
+        let addComment = document.createElement("p");
+        addComment.classList.add("comment");
+        addComment.textContent = `Commentaire : ${comment.value}`;
+        localStorage.setItem('comment', comment.value)
+        Review_list.prepend(addComment);
+    
+        let addFirstname = document.createElement("h6");
+        addFirstname.classList.add("firstname");
+        addFirstname.textContent = `Avis laisser par ${firstname.value}`;
+        localStorage.setItem('firstname', firstname.value); 
+        Review_list.prepend(addFirstname);   
  
+}
+
+// ajout de la méthode du localStorage à améliorer : utiliser (getItem) pour récupérer ce qui est stocker. Voir si possibilité de stockés plusieurs données et que ces données soient garder à la vue au rechargement.

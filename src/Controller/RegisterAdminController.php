@@ -48,7 +48,7 @@ class RegisterAdminController extends AbstractController
     public function index(Request $request, UserPasswordHasherInterface $passwordHasher, PasswordGenerator $passwordGenerator): Response
     
     {
-        $generator = $passwordGenerator->generateRandomStrongPassword(10);
+        $generator = $passwordGenerator->generateRandomStrongPassword(20);
 
         $user = new User();
         $form = $this->createForm(RegisterAdminType::class, $user);
