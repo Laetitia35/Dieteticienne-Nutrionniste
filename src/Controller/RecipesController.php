@@ -46,7 +46,7 @@ class RecipesController extends AbstractController
         ]);
     }
 
-    #[Route("/recette/{slug}", name: 'app_recipes')]
+    #[Route("/recette/{slug}", name: 'app_recipe')]
     public function show($slug) : Response
     {
         $recipe = $this->entityManager->getRepository(Recipe::class)->findOneBy(['slug' => $slug]);
